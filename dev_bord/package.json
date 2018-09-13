@@ -5,6 +5,7 @@
   "main": "./index.js",
   "scripts": {
     "build": "browserify -d src/app.js > index.js",
+    "watch": "watchify src/app.js -o index.js",
     "postinstall": "npm run build"
   },
   "dependencies": {

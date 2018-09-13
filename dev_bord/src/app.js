@@ -1,7 +1,7 @@
 const anypixel = require('anypixel');
 const ctx = anypixel.canvas.getContext2D();
 
-let colors = ['#F00', '#0F0', '#00F'];
+let colors = ['#336B87', '#763626'];
 let counter = 0;
 let letters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("");
 
@@ -22,7 +22,7 @@ document.addEventListener('onButtonDown', function(event) {
  */
 function drawLetter(letter) {
     clearScreen();
-    ctx.fillStyle = colors[Math.floor(Math.random() * 3)];
+    ctx.fillStyle = colors[Math.floor(Math.random() * 2)];
     ctx.font = "15px 'anypixelfont'";
 
     ctx.fillText(letter, 0, anypixel.config.height - 10);
