@@ -1,2 +1,2 @@
-# FP-AnyPixel Backend
-Friese poort AnyPixel.JS Project
+# Laravel-Nuxt-SPA
+Laravel Nuxt Starter pack
