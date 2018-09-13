@@ -173,7 +173,7 @@ const ctx = anypixel.canvas.getContext2D();
 
 let colors = ['#336B87', '#763626'];
 let counter = 0;
-let letters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZS").split("");
+let letters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("");
 
 drawLetter(letters[counter]);
 
