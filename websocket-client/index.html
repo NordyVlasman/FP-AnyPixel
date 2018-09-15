@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test client</title>
+</head>
+<body onclick="sendClick()" style="height:100vh;width:100vw;">
+
+
+	<script>
+		const ws = new WebSocket("ws://localhost:8080", "protocolOne");
+	
+		function sendClick() {
+			console.log("Click");
+			if(ws.readyState === ws.CLOSED) return;
+			ws.send("click");
+		}
+	</script>
+	
+</body>
+</html>
