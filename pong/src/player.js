@@ -9,6 +9,8 @@ class Player extends Hitbox {
         this.size = new Vec(w, h);
         this.vel = new Vec();
         this.score = 0;
+        this.velSpeed = 30;
+        this.xAxisOffset = 5;
     }
 }
 
