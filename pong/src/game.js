@@ -13,8 +13,11 @@ class Game {
         this.ballBaseSpeed = 25;
 
         let lastTime;
-        //don't forget about the width of the player
-        this.players = [new Player(0, 0, 5, 10), new Player(0, 0, 5, 10)];
+
+        this.players = [];
+        for(let i=0;i<2;i++) {
+            this.players.push(new Player(5, 10));
+        }
 
         this.reset();
         this.start();
@@ -84,7 +87,9 @@ class Game {
         this.players.forEach((player, index) => {
             player.pos.y = this.anypixel.config.height / 2 - player.size.y / 2;
             player.pos.x = (index === 0 ? player.xAxisOffset: this.anypixel.config.width - (player.xAxisOffset + player.size.x));
-        })
+        });
+
+        setTimeout(() => {this.start()}, 3000);
     }
 
     updatePos(object, dt) {
