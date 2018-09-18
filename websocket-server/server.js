@@ -32,7 +32,7 @@ wss.on('connection', function connection(ws) {
 		console.log('received: %s', message);
 		
 		webSocketList.forEach((webSocket) => {
-			webSocket.send("click");
+			webSocket.send(message);
 		});
 	});
 });
