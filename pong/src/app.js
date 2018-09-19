@@ -20,6 +20,27 @@ const Game = require("./game.js");
 const ctx = anypixel.canvas.getContext2D();
 const game = new Game(anypixel, ctx);
 const playerBoardWidth = 0.2;
+
+const ws = new WebSocket("ws://localhost:8080", "protocolOne");
+
+ws.onopen = (event) => {
+    console.log("Ready");
+};
+
+ws.onmessage = (event) => {
+    console.log(event.data);
+    const btnEvent = new Event("onButtonDown");
+    btnEvent.detail = {x: 0, y: ((event.data === "buttonUp" ? 0 : 100000000000))};
+    document.dispatchEvent(btnEvent);
+    setTimeout(
+        () => {
+            const event2 = new Event("onButtonUp");
+            event2.detail = {x: 0};
+            document.dispatchEvent(event2);
+        }, 50
+    )
+};
+
 /**
  * Listen for onButtonDown events and draw a 2x2 rectangle at the event site
  */
