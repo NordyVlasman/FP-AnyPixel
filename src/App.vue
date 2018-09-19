@@ -2,30 +2,35 @@
   <v-app id="inspire">
     <v-toolbar color="primary" dark>
       <v-toolbar-side-icon></v-toolbar-side-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>AnyPixel.JS Friesepoort</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon>search</v-icon>
-      </v-btn>
     </v-toolbar>
       <div class="headline text-xs-center pa-5">
         Active: {{ bottomNav }}<br/>
-        <v-btn color="info" v-on:click="addClick">Volgende</v-btn>
+        <div v-if="bottomNav === 'recent'">
+          <Pong/>
+        </div>
+        <div v-else-if="bottomNav === 'favorites'">
+          <Hello/>
+        </div>
+        <div v-else>
+          Hello world
+        </div>
       </div>
       <v-bottom-nav :active.sync="bottomNav" :value="true" absolute color="transparent">
         <v-btn color="teal" flat value="recent">
-          <span>Recent</span>
+          <span>Pong</span>
           <v-icon>history</v-icon>
         </v-btn>
 
         <v-btn color="teal" flat value="favorites">
-          <span>Favorites</span>
+          <span>Hello world</span>
           <v-icon>favorite</v-icon>
         </v-btn>
 
         <v-btn color="teal" flat value="nearby">
-          <span>Nearby</span>
+          <span>Test</span>
           <v-icon>place</v-icon>
         </v-btn>
       </v-bottom-nav>
@@ -36,17 +41,29 @@
 </style>
 
 <script>
+  import Pong from './components/Pong'
+  import Hello from "./components/Hello";
   export default {
     name: 'Normal',
+    components: {
+      Hello,
+      Pong
+    },
     data () {
       return {
-        bottomNav: 'recent'
+        bottomNav: 'recent',
       }
   },
   methods: {
-      addClick: function () {
-        this.$socket.send('click');
-        console.log('Hier is geklikt');
+      addClick: function (up) {
+        if(!this.$store.state.socket.isConnected)
+          return;
+
+        if(up === true) {
+          this.$socket.send('buttonUp');
+        } else {
+          this.$socket.send('buttonDown');
+        }
       }
     }
   }

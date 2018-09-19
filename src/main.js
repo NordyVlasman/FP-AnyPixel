@@ -7,10 +7,13 @@ import VueNativeSock from 'vue-native-websocket'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import colors from 'vuetify/es5/util/colors'
+import store from './store'
 
 
 Vue.config.productionTip = false
-Vue.use(VueNativeSock, 'ws://192.168.1.30:8080')
+Vue.use(VueNativeSock, 'ws://localhost:8080', {
+  store: store
+});
 
 Vue.use(Vuetify, {
   theme: {
@@ -19,12 +22,13 @@ Vue.use(Vuetify, {
     error: colors.red.accent3,
     teal: colors.teal
   }
-})
+});
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
