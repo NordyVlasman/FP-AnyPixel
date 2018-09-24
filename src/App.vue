@@ -7,7 +7,6 @@
 
     </v-toolbar>
       <div class="headline text-xs-center pa-5">
-        Active: {{ bottomNav }}<br/>
         <div v-if="bottomNav === 'recent'">
           <Pong/>
         </div>
@@ -42,7 +41,7 @@
 
 <script>
   import Pong from './components/Pong'
-  import Hello from "./components/Hello";
+  import Hello from "./components/Hello"
   export default {
     name: 'Normal',
     components: {

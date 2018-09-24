@@ -11,7 +11,7 @@ import store from './store'
 
 
 Vue.config.productionTip = false
-Vue.use(VueNativeSock, 'ws://192.168.137.94:8080', {
+Vue.use(VueNativeSock, 'ws://192.168.1.30:8080', {
   store: store
 });
 
