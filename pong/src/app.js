@@ -7,12 +7,13 @@ const game = new Game(anypixel, ctx);
 const ws = new WebSocket("ws://localhost:8080", "protocolOne");
 
 ws.onopen = (event) => {
-    ws.send()
+
 };
 
 ws.onmessage = (event) => {
     const btnDownEvent = new Event("onButtonDown");
-    var clientMessage = JSON.parse(event.data);
+    const clientMessage = JSON.parse(event.data);
+
     btnDownEvent.detail = {
         x: 0,
         y: ((clientMessage.msg === "buttonUp" ? 0 : 100000000000))
@@ -20,13 +21,12 @@ ws.onmessage = (event) => {
 
     document.dispatchEvent(btnDownEvent);
 
-    setTimeout(
-        () => {
-            const buttonUpEvent = new Event("onButtonUp");
-            buttonUpEvent.detail = {x: 0};
-            document.dispatchEvent(buttonUpEvent);
-        }, 50
-    )
+    if(clientMessage.msg === "false")
+    {
+        const buttonUpEvent = new Event("onButtonUp");
+        buttonUpEvent.detail = {x: 0};
+        document.dispatchEvent(buttonUpEvent);
+    }
 };
 
 /**
