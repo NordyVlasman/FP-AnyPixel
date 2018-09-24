@@ -27,18 +27,12 @@ let webSocketList = [];
 
 wss.on('connection', function connection(ws, req) {
 	webSocketList.push(ws);
-    // console.log('New websocket connection from %s:%d', ws._socket.remoteAddress, ws._socket.remotePort);
-    console.log(webSocketList);
-
     ws.on('message', function incoming(message) {
-
-		console.log('received: %s', message);
 		webSocketList.forEach((webSocket) => {
-		    sObj = new Object()
-            sObj.user = webSocket._socket.remoteAddress.toString();
-		    sObj.msg = message;
-		    console.log(JSON.stringify(sObj));
-			webSocket.send(JSON.stringify(sObj));
+		    const data = new Object();
+            data.user = webSocket._socket.remoteAddress.toString();
+            data.msg = message;
+			webSocket.send(JSON.stringify(data));
 		});
 	});
 });
