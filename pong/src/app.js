@@ -1,21 +1,4 @@
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/license-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the license.
- */
-
-
-const anypixel = require('anypixel');
+ const anypixel = require('anypixel');
 const Game = require("./game.js");
 const ctx = anypixel.canvas.getContext2D();
 const game = new Game(anypixel, ctx);
@@ -24,13 +7,15 @@ const playerBoardWidth = 0.2;
 const ws = new WebSocket("ws://localhost:8080", "protocolOne");
 
 ws.onopen = (event) => {
+    ws.send()
     console.log("Ready");
 };
 
 ws.onmessage = (event) => {
-    console.log(event.data);
     const btnEvent = new Event("onButtonDown");
-    btnEvent.detail = {x: 0, y: ((event.data === "buttonUp" ? 0 : 100000000000))};
+    var test = JSON.parse(event.data);
+    console.log(test.msg);
+    btnEvent.detail = {x: 0, y: ((test.msg === "buttonUp" ? 0 : 100000000000))};
     document.dispatchEvent(btnEvent);
     setTimeout(
         () => {

@@ -22,17 +22,23 @@ const wss = new WebSocket.Server({
                                    // should not be compressed.
   }
 });
-
+console.log("Server listening on port: 8080");
 let webSocketList = [];
 
-wss.on('connection', function connection(ws) {
+wss.on('connection', function connection(ws, req) {
 	webSocketList.push(ws);
-	
-	ws.on('message', function incoming(message) {
+    // console.log('New websocket connection from %s:%d', ws._socket.remoteAddress, ws._socket.remotePort);
+    console.log(webSocketList);
+
+    ws.on('message', function incoming(message) {
+
 		console.log('received: %s', message);
-		
 		webSocketList.forEach((webSocket) => {
-			webSocket.send(message);
+		    sObj = new Object()
+            sObj.user = webSocket._socket.remoteAddress.toString();
+		    sObj.msg = message;
+		    console.log(JSON.stringify(sObj));
+			webSocket.send(JSON.stringify(sObj));
 		});
 	});
 });
