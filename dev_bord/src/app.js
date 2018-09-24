@@ -1,7 +1,7 @@
 const anypixel = require('anypixel');
 const ctx = anypixel.canvas.getContext2D();
 
-const ws = new WebSocket("ws://localhost:8080", "protocolOne");
+const ws = new WebSocket("ws://localhost:8080/path?param=1", "protocolOne");
 
 let colors = ['#247BA0', '#FF1654'];
 let counter = 0;
@@ -11,6 +11,7 @@ drawLetter(letters[counter]);
 
 ws.onopen = (event) => {
     console.log("Ready");
+    ws.send("board");
 };
 
 ws.onmessage = (event) => {

@@ -1,9 +1,10 @@
 const WebSocket = require('ws');
- 
+const uuid = require('node-uuid');
+
 const wss = new WebSocket.Server({
   port: 8080,
   perMessageDeflate: {
-    zlibDeflateOptions: { // See zlib defaults.
+    zlibDeflateOptions: {
       chunkSize: 1024,
       memLevel: 7,
       level: 3,
@@ -11,28 +12,87 @@ const wss = new WebSocket.Server({
     zlibInflateOptions: {
       chunkSize: 10 * 1024
     },
-    // Other options settable:
-    clientNoContextTakeover: true, // Defaults to negotiated value.
-    serverNoContextTakeover: true, // Defaults to negotiated value.
-    clientMaxWindowBits: 10,       // Defaults to negotiated value.
-    serverMaxWindowBits: 10,       // Defaults to negotiated value.
-    // Below options specified as default values.
-    concurrencyLimit: 10,          // Limits zlib concurrency for perf.
-    threshold: 1024,               // Size (in bytes) below which messages
-                                   // should not be compressed.
+    clientNoContextTakeover: true,
+    serverNoContextTakeover: true,
+    clientMaxWindowBits: 10,
+    serverMaxWindowBits: 10,
+    concurrencyLimit: 10,
+    threshold: 1024,
   }
 });
 console.log("Server listening on port: 8080");
-let webSocketList = [];
-
+let clients = [];
+let host = null;
 wss.on('connection', function connection(ws, req) {
-	webSocketList.push(ws);
+
+    ws.id = uuid.v4();
+
+    ws.on('close', () => {
+        for (let j = 0, len = clients.length; j < len; j++)
+        {
+            if(clients[j] === ws)
+                clients.splice(j, 1);
+        }
+    });
+
+
+    if(clients.length === 0)  {
+        clients.push(ws);
+    } else {
+        for (let j = 0, len = clients.length; j < len; j++)
+        {
+            if(clients[j].id === ws.id)
+            {
+                return;
+            } else {
+                clients.push(ws);
+            }
+        }
+    }
+
+    for (let i = 0, len = clients.length; i < len; i++) {
+        if(clients[i].id === ws.id)
+            clients[i].send("Player: " + i);
+    }
     ws.on('message', function incoming(message) {
-		webSocketList.forEach((webSocket) => {
-		    const data = new Object();
-            data.user = webSocket._socket.remoteAddress.toString();
-            data.msg = message;
-			webSocket.send(JSON.stringify(data));
-		});
+
+        if(message === "board")
+        {
+            for (let i = 0, len = clients.length; i < len; i++) {
+                if(clients[i].id === ws.id)
+                {
+                    host = ws;
+                    clients.splice(i, 1);
+                }
+            }
+        }
+
+        if(message !== "board")
+        {
+            if(clients.length === 2)
+            {
+                for (let i = 0, len = 2; i < len; i++) {
+
+                    if (clients[i].id === ws.id) {
+
+                        let data = new Object();
+                        data.user = ws.id;
+                        data.player = i;
+                        data.msg = message;
+                        host.send(JSON.stringify(data));
+                    }
+                }
+            } else {
+                for (let i = 0, len = clients.length; i < len; i++) {
+                    if (clients[i].id === ws.id) {
+                        let data = new Object();
+                        data.user = ws.id;
+                        data.msg = message;
+                        host.send(JSON.stringify(data));
+                    }
+                }
+            }
+
+        }
 	});
 });

@@ -7,15 +7,20 @@ const game = new Game(anypixel, ctx);
 const ws = new WebSocket("ws://localhost:8080", "protocolOne");
 
 ws.onopen = (event) => {
-
+    ws.send("board");
 };
 
 ws.onmessage = (event) => {
+    let player = null;
     const btnDownEvent = new Event("onButtonDown");
     const clientMessage = JSON.parse(event.data);
-
+    console.log(clientMessage.player);
+    if(clientMessage.player === "0")
+        player = 0;
+    else
+        player = 1000000000;
     btnDownEvent.detail = {
-        x: 0,
+        x: player,
         y: ((clientMessage.msg === "buttonUp" ? 0 : 100000000000))
     };
 
