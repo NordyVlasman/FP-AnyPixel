@@ -37,6 +37,11 @@
 </template>
 
 <style lang="scss" scoped>
+  body {
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
 </style>
 
 <script>

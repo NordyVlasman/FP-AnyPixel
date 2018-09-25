@@ -10,8 +10,8 @@
     <v-btn color="info"
            @mousedown="startButton('buttonDown')"
            @mouseup="stopButton('buttonDown')"
-           @touchstart="startButton('buttonUp')"
-           @touchend="stopButton('buttonUp')"
+           @touchstart="startButton('buttonDown')"
+           @touchend="stopButton('buttonDown')"
            style="height: 90px;" large>Omlaag</v-btn>
   </div>
 </template>
