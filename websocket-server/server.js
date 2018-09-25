@@ -54,27 +54,23 @@ wss.on('connection', function connection(ws, req) {
         if(clients[i].id === ws.id)
             clients[i].send("Player: " + i);
     }
+
     ws.on('message', function incoming(message) {
 
-        if(message === "board")
-        {
-            for (let i = 0, len = clients.length; i < len; i++) {
-                if(clients[i].id === ws.id)
-                {
-                    host = ws;
-                    clients.splice(i, 1);
-                }
+        if(message === "board") {
+            if (clients[clients.length - 1].id === ws.id) {
+                host = ws;
+                clients.splice(clients.length - 1, 1);
             }
         }
 
         if(message !== "board")
         {
+            console.log(message + ws.id);
             if(clients.length === 2)
             {
                 for (let i = 0, len = 2; i < len; i++) {
-
                     if (clients[i].id === ws.id) {
-
                         let data = new Object();
                         data.user = ws.id;
                         data.player = i;
@@ -87,6 +83,7 @@ wss.on('connection', function connection(ws, req) {
                     if (clients[i].id === ws.id) {
                         let data = new Object();
                         data.user = ws.id;
+                        data.player = i;
                         data.msg = message;
                         host.send(JSON.stringify(data));
                     }

@@ -11,27 +11,12 @@ ws.onopen = (event) => {
 };
 
 ws.onmessage = (event) => {
-    let player = null;
-    const btnDownEvent = new Event("onButtonDown");
     const clientMessage = JSON.parse(event.data);
-    console.log(clientMessage.player);
-    if(clientMessage.player === "0")
-        player = 0;
-    else
-        player = 1000000000;
-    btnDownEvent.detail = {
-        x: player,
-        y: ((clientMessage.msg === "buttonUp" ? 0 : 100000000000))
-    };
-
-    document.dispatchEvent(btnDownEvent);
-
+    let player = game.players[parseInt(clientMessage.player)];
     if(clientMessage.msg === "false")
-    {
-        const buttonUpEvent = new Event("onButtonUp");
-        buttonUpEvent.detail = {x: 0};
-        document.dispatchEvent(buttonUpEvent);
-    }
+        player.vel.y = 0;
+    else
+        player.vel.y = (clientMessage.msg === "buttonUp" ? 10 : -10);
 };
 
 /**
