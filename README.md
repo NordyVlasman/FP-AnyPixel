@@ -1,6 +1,6 @@
-# fp-anypixel-pwa
+# fp-anypixel
 
-> Friese poort AnyPixel.js Progressive web app
+> A Vue.js project
 
 ## Build Setup
 

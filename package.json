@@ -1,7 +1,7 @@
 {
-  "name": "fp-anypixel-pwa",
+  "name": "fp-anypixel",
   "version": "1.0.0",
-  "description": "Friese poort AnyPixel.js Progressive web app",
+  "description": "A Vue.js project",
   "author": "Nordy Vlasman <206535@edu.rocfriesepoort.nl>",
   "private": true,
   "scripts": {
@@ -10,13 +10,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "node-sass": "^4.9.3",
-    "sass-loader": "^7.1.0",
     "vue": "^2.5.2",
-    "vue-native-websocket": "^2.0.11",
-    "vue-router": "^3.0.1",
-    "vuetify": "^1.2.3",
-    "vuex": "^3.0.1"
+    "vue-socket.io": "^2.1.1-b",
+    "vuetify": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",
