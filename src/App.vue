@@ -1,9 +1,12 @@
 <template>
   <v-app id="inspire">
-    <v-toolbar color="primary" dark>
-      <v-toolbar-side-icon></v-toolbar-side-icon>
-      <v-toolbar-title>AnyPixel.JS Friesepoort</v-toolbar-title>
+    <v-toolbar color="white" light>
       <v-spacer></v-spacer>
+      <v-toolbar-title>FP Anypixel</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon>search</v-icon>
+       </v-btn>
 
     </v-toolbar>
     <div class="headline text-xs-center pa-5">
@@ -50,7 +53,7 @@ export default {
     connect: function () {
       console.log('socket connected')
     },
-    'game joined': function(val) {
+    user_join: function(val) {
       this.joinedGame = val;
     }
   },
@@ -66,7 +69,7 @@ export default {
   },
   methods: {
     joinGame() {
-      this.$socket.emit('join game', { gameName: 'anypixel' });
+      this.$socket.emit('join', { gameName: 'anypixel' });
     }
   }
 }
