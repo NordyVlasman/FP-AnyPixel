@@ -98,6 +98,8 @@ io.on('connection', function(socket) {
              num += 1;
       });
 
+      socket.broadcast.emit("player_join");
+
       let player = {
          num: num,
          playerName: 'Player' + num,

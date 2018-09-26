@@ -14,7 +14,7 @@ socket.on('button_event', (data) => {
     if(data.btnEvent === "false")
         player.vel.y = 0;
     else
-        player.vel.y = (data.btnEvent === "buttonUp" ? 10 : -10);
+        player.vel.y = (data.btnEvent === "buttonUp" ? 20 : -20);
 });
 
 /**
