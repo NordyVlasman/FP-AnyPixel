@@ -14,6 +14,8 @@
            @touchstart="startButton('buttonDown')"
            @touchend="stopButton('buttonDown')"
            large>Omlaag</v-btn>
+    <br/>
+
   </div>
 </template>
 <script>

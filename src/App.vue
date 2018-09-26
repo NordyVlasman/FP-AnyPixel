@@ -17,7 +17,8 @@
         <div v-else>
           <v-btn color="info"
                  v-on:click="joinGame"
-                 style="height: 90px;" large>Omhoog</v-btn>
+                 style="height: 90px;" large>Join game</v-btn>
+
         </div>
       </div>
       <div v-else-if="bottomNav === 'favorites'">
@@ -27,18 +28,34 @@
         Hello world
       </div>
     </div>
+    <v-snackbar
+      v-model="snackbar"
+      :color="color"
+      :multi-line="mode === 'multi-line'"
+      :timeout="timeout"
+      :vertical="mode === 'vertical'"
+    >
+      Er is een nieuwe user
+      <v-btn
+        dark
+        flat
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     <v-bottom-nav :active.sync="bottomNav" :value="true" absolute color="transparent">
-      <v-btn color="teal" flat value="recent">
+      <v-btn color="blue" flat value="recent">
         <span>Pong</span>
         <v-icon>history</v-icon>
       </v-btn>
 
-      <v-btn color="teal" flat value="favorites">
+      <v-btn color="blue" flat value="favorites">
         <span>Hello world</span>
         <v-icon>favorite</v-icon>
       </v-btn>
 
-      <v-btn color="teal" flat value="nearby">
+      <v-btn color="blue" flat value="nearby">
         <span>Test</span>
         <v-icon>place</v-icon>
       </v-btn>
@@ -55,6 +72,9 @@ export default {
     },
     user_join: function(val) {
       this.joinedGame = val;
+    },
+    player_join: function() {
+      this.snackbar = true;
     }
   },
   components: {
@@ -65,6 +85,11 @@ export default {
     return {
       bottomNav: 'recent',
       joinedGame: null,
+      snackbar: false,
+      color: '',
+      mode: '',
+      timeout: 6000,
+      showDing: false,
     }
   },
   methods: {
