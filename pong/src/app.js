@@ -5,24 +5,17 @@ const ctx = anypixel.canvas.getContext2D();
 const game = new Game(anypixel, ctx);
 const io = require('socket.io-client');
 
-const socket = io('http://localhost:5000')
+const socket = io('http://localhost:5000');
 
-socket.on('connect', function(){});
+socket.emit('host', { gameName: 'anypixel' });
 
-socket.emit('host game', { gameName: 'anypixel' });
-
-socket.on('new player joined', (data) => {
-   console.log('Er is een nieuwe speler: ' + data.num)
-});
-
-socket.on('button event', (data) => {
+socket.on('button_event', (data) => {
     let player = game.players[parseInt(data.player) -1];
     if(data.btnEvent === "false")
         player.vel.y = 0;
     else
         player.vel.y = (data.btnEvent === "buttonUp" ? 10 : -10);
 });
-
 
 /**
  * Listen for onButtonDown events and draw a 2x2 rectangle at the event site

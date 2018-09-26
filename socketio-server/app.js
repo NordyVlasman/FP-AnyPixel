@@ -22,11 +22,9 @@ function getOrCreateGame(gameName) {
 }
 
 function leaveGame(gameName, leavingPlayer) {
-    var game = games[gameName];
+    let game = games[gameName];
     if (!game) return console.log('no game with name', gameName, 'to leave');
     game.players = game.players.filter(function(player) { return player.player !== leavingPlayer; });
-
-    if (game.hostSocket) game.hostSocket.emit('player left', leavingPlayer);
 }
 
 io.on('connection', function(socket) {
@@ -42,16 +40,12 @@ io.on('connection', function(socket) {
        joinedGames.forEach(function(jg) { leaveGame(jg.gameName, jg.player); });
     });
 
-   socket.on('host game', (data) => {
+   socket.on('host', (data) => {
       console.log("Host user is gevonden", data);
       let game = getOrCreateGame(data.gameName);
       game.hostSocket = socket;
 
       hostedGames.push(data.gameName);
-
-      game.players.forEach(function(p) {
-          socket.emit('new player joined', p.player);
-      });
 
    });
 
@@ -63,7 +57,7 @@ io.on('connection', function(socket) {
                     player: data.user,
                     btnEvent: 'buttonUp'
                 };
-                game.hostSocket.emit('button event', user);
+                game.hostSocket.emit('button_event', user);
             }
        });
    });
@@ -76,7 +70,7 @@ io.on('connection', function(socket) {
                     player: data.user,
                     btnEvent: 'buttonDown'
                 };
-                game.hostSocket.emit('button event', user);
+                game.hostSocket.emit('button_event', user);
             }
         });
     });
@@ -89,12 +83,12 @@ io.on('connection', function(socket) {
                     player: data.user,
                     btnEvent: 'false'
                 };
-                game.hostSocket.emit('button event', user);
+                game.hostSocket.emit('button_event', user);
             }
         });
     });
 
-   socket.on('join game', (data) => {
+   socket.on('join', (data) => {
       console.log('join game', data);
 
       let game = getOrCreateGame(data.gameName);
@@ -121,9 +115,7 @@ io.on('connection', function(socket) {
 
        console.log("new player joined", player);
 
-       if (game.hostSocket)
-           game.hostSocket.emit('new player joined', player);
-       socket.emit('game joined', player);
+       socket.emit('user_join', player);
    });
 
 
