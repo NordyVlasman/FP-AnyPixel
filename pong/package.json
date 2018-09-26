@@ -8,6 +8,7 @@
     "postinstall": "npm run build"
   },
   "dependencies": {
-    "anypixel": "^1.0.0"
+    "anypixel": "^1.0.0",
+    "socket.io-client": "^2.1.1"
   }
 }

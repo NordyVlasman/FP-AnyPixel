@@ -1,3 +1,4 @@
 dev_bord/node_modules/
 .idea/
 websocket-server/node_modules/
+socketio-server/node_modules/
