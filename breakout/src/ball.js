@@ -1,14 +1,17 @@
-const Vec = require("./vec.js");
-const Hitbox = require("./hitbox.js");
+const Rectangle = require("./rectangle");
 
-class Ball extends Hitbox {
+class Ball extends  Rectangle {
 
-    constructor(x, y) {
-        super();
-        this.pos = new Vec(x, y);
-        this.size = new Vec(4, 4);
-        this.vel = new Vec();
+    get len() {
+        return Math.sqrt(this.x * this.x + this.y + this.y);
     }
+
+    set len(value) {
+        const fact = value / this.len;
+        this.x *= fact;
+        this.y *= fact;
+    }
+
 }
 
 module.exports = Ball;

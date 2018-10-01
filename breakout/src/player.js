@@ -1,16 +1,10 @@
-const Vec = require("./vec.js");
-const Hitbox = require("./hitbox.js");
+const Rectangle = require("./rectangle");
 
-class Player extends Hitbox {
-    constructor(w, h) {
-        super();
+class Player extends Rectangle {
 
-        this.pos = new Vec(0, 0);
-        this.size = new Vec(w, h);
-        this.vel = new Vec();
-        this.score = 0;
-        this.velSpeed = 30;
-        this.xAxisOffset = 5;
+    constructor(color, w, h) {
+        super(color, w, h);
+        this.baseSpeed = 30;
     }
 }
 
