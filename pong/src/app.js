@@ -2,12 +2,14 @@ const anypixel = require('anypixel');
 const Game = require("./game.js");
 const playerBoardWidth = 0.2;
 const ctx = anypixel.canvas.getContext2D();
-const game = new Game(anypixel, ctx);
 const io = require('socket.io-client');
 
 const socket = io('http://localhost:5000');
 
 socket.emit('host', { gameName: 'anypixel' });
+
+//TODO: Hier even wat netjes van maken ofzo dingen doen
+const game = new Game(anypixel, ctx);
 
 socket.on('button_event', (data) => {
     let player = game.players[parseInt(data.player) -1];
@@ -16,6 +18,10 @@ socket.on('button_event', (data) => {
     else
         player.vel.y = (data.btnEvent === "buttonUp" ? 20 : -20);
 });
+
+socket.on('haltgame', () => [
+   game.haltGame()
+]);
 
 /**
  * Listen for onButtonDown events and draw a 2x2 rectangle at the event site

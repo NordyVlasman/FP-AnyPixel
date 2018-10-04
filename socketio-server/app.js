@@ -24,6 +24,7 @@ function getOrCreateGame(gameName) {
 function leaveGame(gameName, leavingPlayer) {
     let game = games[gameName];
     if (!game) return console.log('no game with name', gameName, 'to leave');
+
     game.players = game.players.filter(function(player) { return player.player !== leavingPlayer; });
 }
 
@@ -37,6 +38,7 @@ io.on('connection', function(socket) {
        console.log('unhosting games', hostedGames);
        hostedGames.forEach(function(g) { games[g].hostSocket = null });
        console.log('leaving games', joinedGames);
+       socket.broadcast.emit('haltgame');
        joinedGames.forEach(function(jg) { leaveGame(jg.gameName, jg.player); });
     });
 
@@ -47,6 +49,10 @@ io.on('connection', function(socket) {
 
       hostedGames.push(data.gameName);
 
+   });
+
+   socket.on('newscore', (data) => {
+       socket.broadcast.emit('newscores', {data})
    });
 
    socket.on('buttonUp', (data) => {
